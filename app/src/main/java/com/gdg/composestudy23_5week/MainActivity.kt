@@ -3,13 +3,16 @@ package com.gdg.composestudy23_5week
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.gdg.composestudy23_5week.ui.components.Header
+import com.gdg.composestudy23_5week.ui.components.KawaiBottomNavigation
 import com.gdg.composestudy23_5week.ui.theme.ComposeStudy235weekTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,27 +20,32 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeStudy235weekTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
+                Surface {
+                    var screenState by remember {
+                        mutableStateOf(ScreenState.Radio)
+                    }
+                    var subHeaderPositionY by remember {
+                        mutableStateOf(0f)
+                    }
+
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        Header(title = "Radio", subHeaderPositionY = subHeaderPositionY)
+                        when (screenState) {
+                            ScreenState.ListenNow -> {}
+                            ScreenState.Browse -> {}
+                            ScreenState.Radio -> RadioScreen(modifier = Modifier.weight(1f)) {
+                                subHeaderPositionY = it
+                            }
+
+                            ScreenState.Library -> {}
+                            ScreenState.Search -> {}
+                        }
+                        KawaiBottomNavigation(screenState = screenState, onStateChange = {
+                            screenState = it
+                        })
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    ComposeStudy235weekTheme {
-        Greeting("Android")
     }
 }
