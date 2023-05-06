@@ -28,5 +28,10 @@
     <string name="station_title9">CCM</string>
     <string name="station_title10">하드록</string>
     <string name="station_title11">댄스팝</string>
+    <string name="bottom_nav_title1">지금 듣기</string>
+    <string name="bottom_nav_title2">둘러보기</string>
+    <string name="bottom_nav_title3">라디오</string>
+    <string name="bottom_nav_title4">보관함</string>
+    <string name="bottom_nav_title5">검색</string>
 
 </resources>
