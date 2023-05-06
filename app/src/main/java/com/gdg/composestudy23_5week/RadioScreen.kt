@@ -1,6 +1,7 @@
 package com.gdg.composestudy23_5week
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,7 +11,9 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,8 +24,10 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,6 +39,7 @@ import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gdg.composestudy23_5week.ui.theme.KawaiBlue
@@ -46,24 +52,67 @@ fun RadioScreen(modifier: Modifier, onPositionYChange: (Float) -> Unit) {
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(scrollState)
-            .padding(horizontal = 16.dp)
     ) {
-        Text(
-            text = "Radio",
-            modifier = Modifier
-                .padding(top = 8.dp)
-                .onPlaced {
-                    onPositionYChange(it.positionInRoot().y)
-                },
-            style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.Bold)
-        )
-        Divider(modifier = Modifier.padding(top = 8.dp))
-        Spacer(modifier = Modifier.height(12.dp))
+        Column(modifier = Modifier.padding(horizontal = 16.dp).padding(top = 8.dp)
+            .onPlaced {
+                onPositionYChange(it.positionInRoot().y)
+            }) {
+            Text(
+                text = "Radio",
+                style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.Bold)
+            )
+            Divider(modifier = Modifier.padding(top = 8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-        repeat(5) {
-            Item()
-            Spacer(modifier = Modifier.height(32.dp))
+            repeat(5) {
+                Item()
+                Spacer(modifier = Modifier.height(32.dp))
+            }
+
+            Row(
+                modifier = Modifier.noRippleClickable { },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Stations by Genre",
+                    style = MaterialTheme.typography.h6.copy(fontWeight = FontWeight.Bold)
+                )
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowRight,
+                    contentDescription = "More",
+                    modifier = Modifier
+                        .offset { IntOffset(-16, 0) }
+                        .size(32.dp),
+                    tint = Color.Gray
+                )
+            }
+
+            Row {
+
+            }
+
+            Text(
+                text = "More to Explore",
+                style = MaterialTheme.typography.h6.copy(fontWeight = FontWeight.Bold)
+            )
+            Divider(modifier = Modifier.padding(top = 12.dp))
         }
+
+        TextMenu(text = "Pop", onClick = {})
+        TextMenu(text = "Hip-Hop/R&B", onClick = {})
+        TextMenu(text = "Dance", onClick = {})
+        TextMenu(text = "Electronic", onClick = {})
+        TextMenu(text = "Singer/Songwriter", onClick = {})
+        TextMenu(text = "Rock", onClick = {})
+        TextMenu(text = "Alternative & Indie", onClick = {})
+        TextMenu(text = "Metal", onClick = {})
+        TextMenu(text = "Jazz", onClick = {})
+        TextMenu(text = "Classical", onClick = {})
+        TextMenu(text = "Country", onClick = {})
+        TextMenu(text = "Kids & Family", onClick = {})
+        TextMenu(text = "Latin", onClick = {})
+        TextMenu(text = "From Around the World", onClick = {})
+        TextMenu(text = "Christian", onClick = {})
     }
 }
 
@@ -88,7 +137,11 @@ private fun Item() {
             )
         }
         IconButton(onClick = { /*TODO*/ }) {
-            Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar", tint = KawaiRed)
+            Icon(
+                imageVector = Icons.Default.DateRange,
+                contentDescription = "Calendar",
+                tint = KawaiRed
+            )
         }
     }
 
@@ -153,5 +206,27 @@ private fun Item() {
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun TextMenu(text: String, onClick: () -> Unit) {
+    Column {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            contentColor = KawaiRed
+        ) {
+            Text(
+                text = text,
+                style = MaterialTheme.typography.button.copy(
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Normal
+                )
+            )
+        }
+        Divider(modifier = Modifier.padding(horizontal = 16.dp))
     }
 }
