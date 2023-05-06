@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">applemusic</string>
+    <string name="music_text">Music</string>
+    <string name="start_text">지금 시작하기</string>
+    <string name="radio_title1">Apple Music 1</string>
+    <string name="radio_description1">놓쳐서는 안 될 신곡</string>
+    <string name="radio_time1">실시간 오전 2시 ~ 3시</string>
+    <string name="radio_image_tile1">Classical Connections Radio with Alexis Ffrench</string>
+    <string name="radio_image_description1">Alexis links Drake to Debussy</string>
+    <string name="radio_title2">Apple Music Hits</string>
+    <string name="radio_description2">시대를 초원해 사랑받는 히트곡</string>
+    <string name="radio_time2">실시간 오전 2시 ~ 4시</string>
+    <string name="radio_image_tile2">Party Starters Radio with Rebecca Judd</string>
+    <string name="radio_image_description2">Music from Timbaland, SWV, and Jade</string>
+    <string name="radio_title3">Apple Music Country</string>
+    <string name="radio_description3">컨트리 팬들을 위한 보석 상자</string>
+    <string name="radio_time3">실시간 오전 3시 ~ 4시</string>
+    <string name="radio_image_tile3">The Broken Jukebox Society Radio with Nick Hoffman</string>
+    <string name="radio_image_description3">Nick welcomes Gavin DeGraw on The Broken Jukebox Society</string>
+    <string name="station_title1">K-Pop</string>
+    <string name="station_title2">핼러윈 파티</string>
+    <string name="station_title3">히트곡</string>
+    <string name="station_title4">한국 드라마 히트곡</string>
+    <string name="station_title5">편안한 음악</string>
+    <string name="station_title6">힙합 명곡</string>
+    <string name="station_title7">R&amp;B 명곡</string>
+    <string name="station_title8">피아노</string>
+    <string name="station_title9">CCM</string>
+    <string name="station_title10">하드록</string>
+    <string name="station_title11">댄스팝</string>
+
 </resources>
