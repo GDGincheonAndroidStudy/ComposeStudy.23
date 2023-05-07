@@ -1,4 +1,4 @@
-package com.gdg.composestudy23_5week
+package com.gdg.composestudy23_5week.data
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.LibraryMusic
@@ -7,6 +7,11 @@ import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Sensors
 import androidx.compose.material.icons.rounded.Widgets
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.gdg.composestudy23_5week.BROWSE
+import com.gdg.composestudy23_5week.LIBRARY
+import com.gdg.composestudy23_5week.LISTENNOW
+import com.gdg.composestudy23_5week.RADIO
+import com.gdg.composestudy23_5week.SEARCH
 
 sealed class BottomNavItem(
     val title: String,

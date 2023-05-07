@@ -38,17 +38,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-data class MusicStation(
-    val title: String,
-    val description: String,
-    val image: Int
-)
-
-data class RadioMusic(
-    val time: String,
-    val musicStation: MusicStation
-)
+import com.gdg.composestudy23_5week.data.MusicStation
+import com.gdg.composestudy23_5week.data.RadioMusic
 
 @Composable
 fun RadioScreen() {
