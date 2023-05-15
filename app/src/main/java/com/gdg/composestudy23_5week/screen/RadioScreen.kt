@@ -31,13 +31,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.gdg.composestudy23_5week.component.CommercialTopBox
+import com.gdg.composestudy23_5week.component.ScreenHeader
 import com.gdg.composestudy23_5week.data.MusicStation
 import com.gdg.composestudy23_5week.data.RadioMusic
 
@@ -64,14 +65,9 @@ fun RadioScreen() {
                 modifier = Modifier.size(27.dp)
             )
         }
-        CommercialBox()
+        CommercialTopBox()
         Spacer(modifier = Modifier.height(height = 30.dp))
-        Text(
-            text = "Radio",
-            fontWeight = FontWeight.Bold,
-            fontSize = 35.sp,
-            color = Color.Black
-        )
+        ScreenHeader(title = "Radio")
         Divider(modifier = Modifier.padding(top = 10.dp, bottom = 15.dp))
 
         RadioMusicTitle(title = "Apple Music 1", description = "The new music thar matters")
@@ -144,49 +140,6 @@ fun RadioScreen() {
             )
         }
         Spacer(modifier = Modifier.height(15.dp))
-    }
-}
-
-@Composable
-fun CommercialBox() {
-    Box(
-        modifier = Modifier
-            .background(
-                brush = Brush.horizontalGradient(
-                    colors = listOf(
-                        Color(0xCC7431F1),
-                        Color(0xCC077DE4)
-                    )
-                ),
-                shape = RoundedCornerShape(10.dp)
-            )
-            .padding(vertical = 7.dp)
-            .fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    painter = painterResource(id = R.drawable.apple_logo),
-                    contentDescription = "apple",
-                    tint = Color.White,
-                    modifier = Modifier.size(20.dp)
-                )
-
-                Text(
-                    text = "Music",
-                    color = Color.White,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.W500
-                )
-            }
-            Text(
-                text = "Try it Now",
-                color = Color.White,
-                fontSize = 17.sp,
-                fontWeight = FontWeight.W400
-            )
-        }
     }
 }
 

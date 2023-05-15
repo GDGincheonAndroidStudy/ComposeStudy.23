@@ -23,6 +23,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.gdg.composestudy23_5week.data.BottomNavItem
+import com.gdg.composestudy23_5week.screen.SearchScreen
 import com.gdg.composestudy23_5week.ui.theme.ComposeStudy235weekTheme
 
 class MainActivity : ComponentActivity() {
@@ -50,7 +51,7 @@ fun MainScreen() {
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = BottomNavItem.Radio.route) {
+    NavHost(navController = navController, startDestination = BottomNavItem.Search.route) {
         composable(BottomNavItem.ListenNow.route) {
         }
         composable(BottomNavItem.Browse.route) {
@@ -61,6 +62,7 @@ fun NavigationGraph(navController: NavHostController) {
         composable(BottomNavItem.Library.route) {
         }
         composable(BottomNavItem.Search.route) {
+            SearchScreen()
         }
     }
 }
