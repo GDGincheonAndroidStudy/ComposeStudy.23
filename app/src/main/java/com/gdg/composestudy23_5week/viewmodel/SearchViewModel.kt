@@ -21,4 +21,7 @@ class SearchViewModel() : ViewModel() {
             }
         }
     }
+    fun setListEmpty() {
+        searchedList.value = emptyList()
+    }
 }
