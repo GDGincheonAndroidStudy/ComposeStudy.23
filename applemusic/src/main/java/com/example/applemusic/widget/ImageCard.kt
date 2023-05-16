@@ -20,7 +20,7 @@ fun ImageCard(time: String, title: String, description: String) {
     Card(shape = Shapes.medium) {
         Column() {
             Image(
-                painter = rememberAsyncImagePainter(model = "https://picsum.photos/seed/picsum/1200/800"),
+                painter = rememberAsyncImagePainter(model = "https://picsum.photos/seed/picsum/1200/930"),
                 contentDescription = null,
                 modifier = Modifier.fillMaxWidth().size(300.dp)
             )

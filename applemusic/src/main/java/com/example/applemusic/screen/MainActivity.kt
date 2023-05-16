@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -38,7 +41,14 @@ class MainActivity : ComponentActivity() {
                                         contentDescription = "menu"
                                     )
                                 }
-                            })
+                            },
+//                            modifier = Modifier.drawBehind { drawLine(
+//                                color = Color.DarkGray,
+//                                start = Offset(x = 0f, y = 0f),
+//                                end = Offset(x = size.width, y = 0f),
+//                                strokeWidth = 2f
+//                            ) }
+                        )
                     },
                     bottomBar = { BottomNavigation(navController = navController) }) {
                     Surface(

@@ -40,7 +40,7 @@ fun RadioCard(
             Column() {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.h6
+                    style = MaterialTheme.typography.body2
                 )
                 Text(
                     text = subTitle,

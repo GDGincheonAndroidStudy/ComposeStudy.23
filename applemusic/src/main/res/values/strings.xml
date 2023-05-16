@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">applemusic</string>
+
+    <string name="radio_title">라디오</string>
     <string name="music_text">Music</string>
     <string name="start_text">지금 시작하기</string>
     <string name="radio_title1">Apple Music 1</string>
@@ -33,5 +35,10 @@
     <string name="bottom_nav_title3">라디오</string>
     <string name="bottom_nav_title4">보관함</string>
     <string name="bottom_nav_title5">검색</string>
+
+    <string name="search_title">검색</string>
+    <string name="search_searchBar_hint">아티스트, 노래, 가사 등</string>
+
+
 
 </resources>

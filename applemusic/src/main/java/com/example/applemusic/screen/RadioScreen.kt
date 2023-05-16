@@ -23,6 +23,7 @@ import com.example.applemusic.data.DataClass
 import com.example.applemusic.ui.RadioCard
 import com.example.applemusic.ui.theme.Shapes
 import com.example.applemusic.widget.StationCard
+import com.example.applemusic.widget.Title
 
 @Composable
 fun RadioScreen() {
@@ -95,12 +96,11 @@ fun RadioScreen() {
                 .background(Brush.horizontalGradient(colorStops = colorStops))) {
                 ButtonContent()
             }
-
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Text(text = "라디오", style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.Bold))
+        Title(title = stringResource(id = R.string.radio_title))
         Divider(thickness = 1.dp, modifier = Modifier.padding(top = 12.dp))
 
         list.forEach {

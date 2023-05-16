@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.applemusic.data.BottomNavItem
 import com.example.applemusic.data.RADIO
+import com.example.applemusic.data.SEARCH
 
 @Composable
 fun BottomNavigation(navController: NavHostController) {
@@ -40,7 +41,7 @@ fun BottomNavigation(navController: NavHostController) {
                 unselectedContentColor = Color.LightGray,
                 selected = item.screenRoute == currentRoute,
                 onClick = {
-                    if (item.screenRoute == RADIO) {
+                    if (item.screenRoute == RADIO || item.screenRoute == SEARCH) {
                         navController.navigate(item.screenRoute) {
                             navController.graph.startDestinationRoute?.let {
                                 popUpTo(it) { saveState = true }
