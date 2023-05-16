@@ -1,4 +1,4 @@
-package com.example.applemusic
+package com.example.applemusic.data
 
 data class DataClass(
     val title: String,

@@ -2,7 +2,6 @@ package com.example.applemusic.widget
 
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -12,8 +11,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.applemusic.BottomNavItem
-import com.example.applemusic.RADIO
+import com.example.applemusic.data.BottomNavItem
+import com.example.applemusic.data.RADIO
 
 @Composable
 fun BottomNavigation(navController: NavHostController) {

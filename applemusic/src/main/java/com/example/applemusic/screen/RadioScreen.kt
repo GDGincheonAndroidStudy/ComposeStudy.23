@@ -1,5 +1,7 @@
-package com.example.applemusic
+package com.example.applemusic.screen
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -10,10 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.applemusic.ButtonContent
+import com.example.applemusic.R
+import com.example.applemusic.data.DataClass
 import com.example.applemusic.ui.RadioCard
 import com.example.applemusic.ui.theme.Shapes
 import com.example.applemusic.widget.StationCard
@@ -60,7 +66,11 @@ fun RadioScreen() {
         R.string.station_title11
     )
 
-
+    val colorStops = arrayOf(
+        0.0f to colorResource(id = R.color.purple_200),
+//        0.2f to Color.Red,
+        1f to Color.Blue
+    )
 
 
 
@@ -72,11 +82,20 @@ fun RadioScreen() {
             .padding(16.dp)
     ) {
         Button(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+            contentPadding = PaddingValues(),
             onClick = { /*TODO*/ },
             shape = Shapes.medium,
+            border = BorderStroke(width = 0.dp, color = Color.Transparent)
         ) {
-            ButtonContent()
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .background(Brush.horizontalGradient(colorStops = colorStops))) {
+                ButtonContent()
+            }
+
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -95,9 +114,10 @@ fun RadioScreen() {
         }
 
 
+
         Text(
             text = "장르별 스테이션 >",
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.body1,
             modifier = Modifier.padding()
         )
         LazyRow(

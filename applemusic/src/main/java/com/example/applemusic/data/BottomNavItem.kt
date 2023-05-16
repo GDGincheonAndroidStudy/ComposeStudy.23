@@ -1,4 +1,6 @@
-package com.example.applemusic
+package com.example.applemusic.data
+
+import com.example.applemusic.R
 
 const val LISTEN = "nowListenScreen"
 const val LOOK = "lookaroundScreen"
