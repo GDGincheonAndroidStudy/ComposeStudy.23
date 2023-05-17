@@ -11,7 +11,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AppleMusicApp()
+            AppleMusicCloneApp()
         }
     }
 }
@@ -20,6 +20,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     ComposeStudy235weekTheme {
-        AppleMusicApp()
+        AppleMusicCloneApp()
     }
 }

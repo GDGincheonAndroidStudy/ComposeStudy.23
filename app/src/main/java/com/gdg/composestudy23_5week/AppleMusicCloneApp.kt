@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import com.gdg.composestudy23_5week.ui.theme.ComposeStudy235weekTheme
 
 @Composable
-fun AppleMusicApp() {
+fun AppleMusicCloneApp() {
     ComposeStudy235weekTheme {
         // A surface container using the 'background' color from the theme
         Surface(
