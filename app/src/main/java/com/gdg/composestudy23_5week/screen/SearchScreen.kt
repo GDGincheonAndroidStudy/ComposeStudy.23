@@ -1,5 +1,8 @@
 package com.gdg.composestudy23_5week.screen // ktlint-disable package-name
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -17,8 +20,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -85,9 +88,11 @@ fun SearchScreen() {
             .padding(horizontal = 16.dp)
             .verticalScroll(state = scrollState)
     ) {
-        if (!isSearching) {
-            Spacer(modifier = Modifier.height(40.dp))
-            ScreenHeader("Search")
+        AnimatedVisibility(visible = !isSearching) {
+            Column {
+                Spacer(modifier = Modifier.height(40.dp))
+                ScreenHeader("Search")
+            }
         }
         Spacer(modifier = Modifier.height(10.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -127,7 +132,7 @@ fun SearchScreen() {
                 }
 
             )
-            if (isSearching) {
+            AnimatedVisibility(visible = isSearching) {
                 Text(
                     "취소",
                     modifier = Modifier
@@ -142,12 +147,16 @@ fun SearchScreen() {
                 )
             }
         }
-        Column(modifier = Modifier.noRippleClickable { focusManager.clearFocus() }) {
-            if (isSearching) {
-                SearchingBody(viewModel.searchedList.collectAsState(), content)
-            } else {
-                Body()
-            }
+        AnimatedVisibility(
+            visible = !isSearching
+        ) {
+            Body()
+        }
+        AnimatedVisibility(
+            visible = isSearching,
+            modifier = Modifier.fillMaxSize().noRippleClickable { focusManager.clearFocus() }
+        ) {
+            SearchingBody(viewModel.searchedList.collectAsState(), content)
         }
     }
 
@@ -169,62 +178,71 @@ inline fun Modifier.noRippleClickable(crossinline onClick: () -> Unit): Modifier
 }
 
 @Composable
-fun SearchingBody(searchedMusic: State<List<Music>>, content :String) {
-    if (searchedMusic.value.isEmpty()) {
-        Spacer(modifier = Modifier.height(20.dp))
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(
-                text = "Recent Searched",
-                fontWeight = FontWeight.W500,
-                fontSize = 17.sp
-            )
-            Text(
-                text = "Clear",
-                style = TextStyle(color = Color.Red, fontWeight = FontWeight.W500, fontSize = 17.sp)
-            )
-        }
-        Divider(modifier = Modifier.padding(top = 10.dp, bottom = 15.dp))
-        MusicListView(
-            listOf(
-                Music(
-                    title = "I love 3000",
-                    thumbnail = "https://image.bugsm.co.kr/album/images/200/9113/911362.jpg?version=20230509002258.0",
-                    artist = listOf(
-                        "Stephanie Poetri"
+fun SearchingBody(searchedMusic: State<List<Music>>, content: String) {
+    Surface(modifier = Modifier.fillMaxSize().background(Color.White)) {
+        AnimatedVisibility(visible = searchedMusic.value.isEmpty(), enter = slideInVertically()) {
+            Column() {
+                Spacer(modifier = Modifier.height(20.dp))
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text(
+                        text = "Recent Searched",
+                        fontWeight = FontWeight.W500,
+                        fontSize = 17.sp
                     )
-                ),
-                Music(
-                    title = "Double take",
-                    thumbnail = "https://image.bugsm.co.kr/album/images/200/150335/15033541.jpg?version=20220702010456.0",
-                    artist = listOf("Dhruv")
+                    Text(
+                        text = "Clear",
+                        style = TextStyle(color = Color.Red, fontWeight = FontWeight.W500, fontSize = 17.sp)
+                    )
+                }
+                Divider(modifier = Modifier.padding(top = 10.dp, bottom = 15.dp))
+                MusicListView(
+                    listOf(
+                        Music(
+                            title = "I love 3000",
+                            thumbnail = "https://image.bugsm.co.kr/album/images/200/9113/911362.jpg?version=20230509002258.0",
+                            artist = listOf(
+                                "Stephanie Poetri"
+                            )
+                        ),
+                        Music(
+                            title = "Double take",
+                            thumbnail = "https://image.bugsm.co.kr/album/images/200/150335/15033541.jpg?version=20220702010456.0",
+                            artist = listOf("Dhruv")
+                        )
+                    )
                 )
-            )
-        )
-    } else {
-        Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            text = "'$content' Result",
-            fontWeight = FontWeight.W500,
-            fontSize = 17.sp
-        )
-        Divider(modifier = Modifier.padding(top = 10.dp, bottom = 15.dp))
-        MusicListView(searchedMusic.value)
+            }
+        }
+        AnimatedVisibility(visible = searchedMusic.value.isNotEmpty()) {
+            Column() {
+                Spacer(modifier = Modifier.height(20.dp))
+                Text(
+                    text = "'$content' Result",
+                    fontWeight = FontWeight.W500,
+                    fontSize = 17.sp
+                )
+                Divider(modifier = Modifier.padding(top = 10.dp, bottom = 15.dp))
+                MusicListView(searchedMusic.value)
+            }
+        }
     }
 }
 
 @Composable
 fun Body() {
-    Spacer(modifier = Modifier.height(20.dp))
-    CommercialContainer()
-    Spacer(modifier = Modifier.height(15.dp))
-    Text(
-        text = "Browse Categories",
-        fontWeight = FontWeight.Bold,
-        fontSize = 20.sp,
-        color = Color.Black
-    )
-    Spacer(modifier = Modifier.height(10.dp))
-    CategoryGridView()
+    Column() {
+        Spacer(modifier = Modifier.height(20.dp))
+        CommercialContainer()
+        Spacer(modifier = Modifier.height(15.dp))
+        Text(
+            text = "Browse Categories",
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
+            color = Color.Black
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+        CategoryGridView()
+    }
 }
 
 @Composable
@@ -236,7 +254,13 @@ fun MusicListView(list: List<Music>) {
 
 @Composable
 fun MusicItem(music: Music) {
-    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth().padding(top = 15.dp), verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 15.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -247,7 +271,10 @@ fun MusicItem(music: Music) {
                 error = painterResource(R.drawable.img_box_1),
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.size(70.dp).clip(RoundedCornerShape(4.dp)).background(Color.Red)
+                modifier = Modifier
+                    .size(70.dp)
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(Color.Red)
             )
 //            Image(
 //                painter = rememberAsyncImagePainter(
