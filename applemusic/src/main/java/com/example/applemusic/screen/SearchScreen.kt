@@ -20,7 +20,7 @@ import com.example.applemusic.widget.CategoryImageCard
 import com.example.applemusic.widget.Title
 
 @Composable
-fun SearchScreen() {
+fun SearchScreen(moveActivity: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -30,13 +30,13 @@ fun SearchScreen() {
         Title(title = stringResource(id = R.string.search_title))
         Spacer(modifier = Modifier.height(16.dp))
 
-        SearchBar()
+        SearchBar(moveActivity)
 
         ExperienceCard()
 
         Text(text = "카테고리 둘러보기", style = MaterialTheme.typography.h4, modifier = Modifier.padding(vertical = 16.dp))
         repeat(5) {
-            Row() {
+            Row(modifier = Modifier.padding(bottom = 8.dp)) {
                 CategoryImageCard(modifier = Modifier.weight(0.5f))
                 Spacer(modifier = Modifier.width(16.dp))
                 CategoryImageCard(modifier = Modifier.weight(0.5f))
@@ -49,11 +49,11 @@ fun SearchScreen() {
 }
 
 @Composable
-fun SearchBar() {
+fun SearchBar(moveActivity: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { }
+            .clickable { moveActivity() }
     ) {
         Card(
             modifier = Modifier
@@ -104,6 +104,7 @@ fun ExperienceCard() {
             ) {
                 Text(text = "1개월 무료 체험하기", style = MaterialTheme.typography.h2)
                 Text(text = "보유 중인 모든 기기에서 음악 보관함 전체를 즐길 수 있습니다. 1개월 무료 체험 후 ￦8,900/개월의 요금이 청구됩니다.")
+
                 Button(
                     modifier = Modifier.width(200.dp),
                     onClick = { /*TODO*/ },
@@ -113,7 +114,7 @@ fun ExperienceCard() {
                         contentColor = MaterialTheme.colors.onSecondary
                     )
                 ) {
-                    Text(text = "무료 체험", modifier = Modifier.padding(vertical = 16.dp))
+                    Text(text = "무료 체험", modifier = Modifier)
                 }
             }
         }

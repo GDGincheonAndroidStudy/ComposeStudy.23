@@ -1,5 +1,6 @@
 package com.example.applemusic.screen
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -7,9 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,7 +16,7 @@ import com.example.applemusic.data.BottomNavItem
 import com.example.applemusic.ui.theme.GdgStudyTheme
 import com.example.applemusic.widget.BottomNavigation
 import com.example.applemusic.R
-
+import com.example.applemusic.screen.search.SearchActivity
 
 
 class MainActivity : ComponentActivity() {
@@ -65,7 +63,7 @@ class MainActivity : ComponentActivity() {
                                 RadioScreen()
                             }
                             composable(BottomNavItem.SearchScreen.screenRoute) {
-                                SearchScreen()
+                                SearchScreen() { moveSearchActivity() }
                             }
                         }
                     }
@@ -73,5 +71,9 @@ class MainActivity : ComponentActivity() {
 
             }
         }
+    }
+
+    private fun moveSearchActivity() {
+        startActivity(Intent(this, SearchActivity::class.java))
     }
 }
