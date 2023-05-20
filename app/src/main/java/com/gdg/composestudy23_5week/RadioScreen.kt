@@ -5,13 +5,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowForwardIos
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.PlayCircle
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,12 +23,44 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RadioScreen() {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(40) {
-            Text("Hello Radio")
+    val viewModel: RadioViewModel = hiltViewModel()
+
+    Scaffold(topBar = { AppleMusicCloneAppBar("라디오") }) { paddingValues ->
+        LazyColumn(modifier = Modifier.padding(paddingValues).fillMaxSize()) {
+            item {
+                TitleHeader("라디오")
+                Divider(
+                    modifier = Modifier.padding(top = 8.dp).padding(horizontal = 16.dp),
+                    color = Color.LightGray,
+                    thickness = 0.5.dp
+                )
+            }
+            items(viewModel.list) { item ->
+                when (item) {
+                    is ListItem.RadioMusic -> {
+                        RadioMusicTitle(item.title, item.description)
+                        RadioMusicContainer(item)
+                    }
+                    is ListItem.StationsByGenre -> {
+                        MusicListRow(item)
+                    }
+                    is ListItem.More -> {
+                        Divider(modifier = Modifier.padding(vertical = 13.dp).padding(start = 16.dp), color = Color.Black.copy(0.1f))
+                        Text(
+                            text = item.genre,
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            fontWeight = FontWeight.W400,
+                            fontSize = 20.sp,
+                            color = Color.Red.copy(0.9f)
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -39,7 +72,7 @@ fun RadioMusicTitle(title: String, description: String) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 17.dp)
+            .padding(start = 16.dp, top = 0.dp, end = 16.dp, bottom = 17.dp)
     ) {
         Column {
             Text(
@@ -71,11 +104,11 @@ fun RadioMusicTitle(title: String, description: String) {
 }
 
 @Composable
-fun RadioMusicContainer(radioMusic: RadioMusic) {
+fun RadioMusicContainer(radioMusic: ListItem.RadioMusic) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 35.dp)
+            .padding(start = 16.dp, top = 0.dp, end = 16.dp, bottom = 35.dp)
             .aspectRatio(1f)
             .clip(
                 shape = RoundedCornerShape(15.dp)
@@ -126,19 +159,36 @@ fun RadioMusicContainer(radioMusic: RadioMusic) {
 }
 
 @Composable
-fun MusicListRow(musicStation: List<MusicStation>) {
+fun MusicListRow(musicStation: ListItem.StationsByGenre) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(start = 16.dp, top = 0.dp, end = 16.dp, bottom = 15.dp)
+    ) {
+        Text(
+            text = "장르별 스테이션",
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
+            color = Color.Black
+        )
+        Icon(
+            imageVector = Icons.Rounded.ArrowForwardIos,
+            contentDescription = "",
+            tint = Color.Black.copy(alpha = 0.7f),
+            modifier = Modifier.size(20.dp)
+        )
+    }
     LazyRow {
         items(
-            musicStation.size
+            musicStation.stations.size
         ) { index ->
-            MusicListItem(musicStation = musicStation[index])
+            MusicListItem(musicStation = musicStation.stations[index])
             Spacer(modifier = Modifier.width(10.dp))
         }
     }
 }
 
 @Composable
-fun MusicListItem(musicStation: MusicStation) {
+fun MusicListItem(musicStation: ListItem.MusicStation) {
     Column(Modifier.width(175.dp)) {
         Box(
             Modifier
