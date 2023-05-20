@@ -29,6 +29,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.gdg.composestudy23_5week.ui.radio.RadioScreen
+import com.gdg.composestudy23_5week.ui.search.SearchScreen
 import com.gdg.composestudy23_5week.ui.theme.DeepGray
 import com.gdg.composestudy23_5week.ui.theme.PinkRed
 
@@ -106,13 +107,15 @@ fun BottomNavigation(navController: NavHostController) {
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = BottomNavItem.Radio.screenRoute) {
+    NavHost(navController = navController, startDestination = BottomNavItem.Search.screenRoute) {
         composable(BottomNavItem.Listen.screenRoute) {}
         composable(BottomNavItem.Browse.screenRoute) {}
         composable(BottomNavItem.Radio.screenRoute) {
             RadioScreen()
         }
         composable(BottomNavItem.Library.screenRoute) {}
-        composable(BottomNavItem.Search.screenRoute) {}
+        composable(BottomNavItem.Search.screenRoute) {
+            SearchScreen()
+        }
     }
 }
