@@ -1,4 +1,4 @@
-package com.gdg.composestudy23_5week.screen.search
+package com.gdg.composestudy23_5week.screen.search_detail
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -6,28 +6,23 @@ import androidx.compose.animation.core.tween
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
-import androidx.navigation.compose.rememberNavController
-import com.gdg.composestudy23_5week.screen.search_detail.SearchDetailScreen
-import com.gdg.composestudy23_5week.screen.search_detail.searchDetailhNavigationRoute
 import com.google.accompanist.navigation.animation.composable
 
-const val searchNavigationRoute = "search_route"
+const val searchDetailhNavigationRoute = "search_detail_route"
 
-fun NavController.navigateSearch(
+fun NavController.navigateSearchDetail(
     navOptions: NavOptions? = null
 ) {
-    this.navigate(searchNavigationRoute, navOptions)
+    this.navigate(searchDetailhNavigationRoute, navOptions)
 }
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.searchScreen(
-    navigateToSearchDetail: () -> Unit
+fun NavGraphBuilder.searchDetailScreen(
+    navigateToBack: () -> Unit
 ) {
-    composable(searchNavigationRoute,
+    composable(searchDetailhNavigationRoute,
         content = {
-            SearchScreen(
-                navigateToSearchDetail = navigateToSearchDetail
-            )
+            SearchDetailScreen(navigateToBack)
         },
         enterTransition = {
             slideIntoContainer(

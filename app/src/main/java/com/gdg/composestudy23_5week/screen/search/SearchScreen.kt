@@ -1,18 +1,22 @@
 package com.gdg.composestudy23_5week.screen.search
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.gdg.composestudy23_5week.R
 import com.gdg.composestudy23_5week.component.CustomScaffold
 
 @Composable
-fun SearchScreen() {
+fun SearchScreen(
+    navigateToSearchDetail: () -> Unit
+) {
     val scaffoldState = rememberScaffoldState()
 
     CustomScaffold(
@@ -23,7 +27,7 @@ fun SearchScreen() {
                 title = { Text(text = "") },
                 backgroundColor = Color.White,
                 actions = {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = {  }) {
                         Icon(painter = painterResource(
                             id = R.drawable.baseline_more_vert_24,),
                             contentDescription = null,
@@ -35,11 +39,28 @@ fun SearchScreen() {
         },
         content = { PaddingValues ->
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
                     .padding(PaddingValues)
             ) {
-                Text(text = "Search Screen")
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp, horizontal = 16.dp)
+                        .background(Color.LightGray)
+                        .clickable {
+                            navigateToSearchDetail()
+                        },
+                    text = "보관함",
+
+                )
             }
         }
     )
+}
+
+@Preview
+@Composable
+fun SearchScreenPreview() {
+    //SearchScreen()
 }
