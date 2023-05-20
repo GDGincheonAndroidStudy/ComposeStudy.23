@@ -1,4 +1,4 @@
-package com.gdg.composestudy23_5week
+package com.gdg.composestudy23_5week.ui.radio
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -20,8 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.gdg.composestudy23_5week.ui.radio.Station
-
+import com.gdg.composestudy23_5week.data.Station
 
 @Composable
 fun MusicListRow(stationList: List<Station>) {

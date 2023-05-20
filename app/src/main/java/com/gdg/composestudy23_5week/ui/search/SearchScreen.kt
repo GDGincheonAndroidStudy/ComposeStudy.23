@@ -87,7 +87,7 @@ fun SearchScreen() {
         "Hits"
     )
 
-    if (!result) {
+    if(!result) {
         Column(
             Modifier
                 .padding(horizontal = 15.dp)
@@ -144,6 +144,84 @@ fun SearchScreen() {
             MusicListColumn(categoryList)
         }
     }
+
+    if(result) {
+        Column(
+            Modifier
+                .padding(horizontal = 15.dp)
+                .verticalScroll(state = scrollState)
+        ) {
+            Spacer(modifier = Modifier.height(10.dp))
+
+            TextField(
+                value = textState,
+                onValueChange = onTextChange,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(10.dp))
+                    .clickable(onClick = { result = true}),
+                placeholder = { Text("Artists, Songs, Lyrics, and More", color = Color.Gray) },
+                singleLine = true,
+                leadingIcon = {
+                    IconButton(onClick = { result = false }) { Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "") }
+                },
+                maxLines = 1,
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            LaunchedEffect(searchQuery.value) {
+                val filteredResults = filterResults(searchQuery.value) // 검색 결과 필터링
+                searchResults.value = filteredResults // 필터링된 결과로 업데이트
+            }
+
+            searchResults.value.forEach {
+                Column() {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Row() {
+                            Image(
+                                painter = painterResource(R.drawable.img_genre1),
+                                contentDescription = "",
+                                modifier = Modifier
+                                    .width(70.dp)
+                                    .height(70.dp)
+                                    .padding(all = 5.dp)
+                                    .clip(shape = CircleShape),
+                                contentScale = ContentScale.Crop,
+                            )
+                            Column() {
+                                Text(
+                                    text = it.title,
+                                    modifier = Modifier.padding(bottom = 5.dp),
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 15.sp,
+                                    color = Color.Black
+                                )
+                                Text(
+                                    text = it.artist,
+                                    modifier = Modifier.padding(bottom = 10.dp),
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 15.sp,
+                                    color = Color.Black
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+fun filterResults(query: String): List<Search> {
+    // 검색어를 소문자로 변환하여 일치하는 결과를 필터링
+    val filteredResults = resultList.filter { result ->
+        result.title.lowercase(Locale.ROOT).contains(query.lowercase(Locale.ROOT))
+    }
+    return filteredResults
 }
 
 
