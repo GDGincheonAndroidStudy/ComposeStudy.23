@@ -1,4 +1,4 @@
-package com.gdg.composestudy23_5week.screen
+package com.gdg.composestudy23_5week.screen.setting
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -7,26 +7,22 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import com.google.accompanist.navigation.animation.composable
-import com.gdg.composestudy23_5week.screen.now_listening.NowListeningScreen
 
-const val nowListeningNavigationRoute ="now_listening_route_route"
+const val settingNavigationRoute = "setting_route"
 
-fun NavController.navigateNowListening(
+fun NavController.navigateSetting(
     navOptions: NavOptions? = null
 ) {
-    this.navigate(nowListeningNavigationRoute, navOptions)
+    this.navigate(settingNavigationRoute, navOptions)
 }
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.nowListeningScreen(
-    navigateToSetting: () -> Unit
+fun NavGraphBuilder.settingScreen(
+    navigateToBack: () -> Unit
 ) {
-    composable(
-        nowListeningNavigationRoute,
+    composable(settingNavigationRoute,
         content = {
-            NowListeningScreen(
-                navigateToSetting = navigateToSetting
-            )
+            SettingScreen(navigateToBack)
         },
         enterTransition = {
             slideIntoContainer(

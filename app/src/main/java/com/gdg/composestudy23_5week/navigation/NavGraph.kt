@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.gdg.composestudy23_5week.component.CustomBottomAppBar
 import com.gdg.composestudy23_5week.component.CustomScaffold
 import com.gdg.composestudy23_5week.screen.locker.lockerScreen
+import com.gdg.composestudy23_5week.screen.nowListeningNavigationRoute
 import com.gdg.composestudy23_5week.screen.nowListeningScreen
 import com.gdg.composestudy23_5week.screen.radio.radioScreen
 import com.gdg.composestudy23_5week.screen.search.searchNavigationRoute
@@ -20,6 +21,8 @@ import com.gdg.composestudy23_5week.screen.search_detail.navigateSearchDetail
 import com.gdg.composestudy23_5week.screen.search_detail.searchDetailScreen
 import com.gdg.composestudy23_5week.screen.see.seeListeningNavigationRoute
 import com.gdg.composestudy23_5week.screen.see.seeScreen
+import com.gdg.composestudy23_5week.screen.setting.navigateSetting
+import com.gdg.composestudy23_5week.screen.setting.settingScreen
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
@@ -46,16 +49,16 @@ fun NavGraph() {
     ) { innerPadding ->
         AnimatedNavHost(
             navController = navController,
-            startDestination = seeListeningNavigationRoute,
+            startDestination = nowListeningNavigationRoute,
             modifier = Modifier.padding(innerPadding)
         ) {
-            nowListeningScreen()
+            nowListeningScreen{ navController.navigateSetting() }
             seeScreen()
             radioScreen()
             lockerScreen()
             searchScreen {navController.navigateSearchDetail()}
-
             searchDetailScreen { navController.popBackStack() }
+            settingScreen { navController.popBackStack() }
         }
     }
 }

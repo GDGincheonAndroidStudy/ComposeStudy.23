@@ -1,10 +1,10 @@
 package com.gdg.composestudy23_5week.util
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
-@Composable
-fun showMessage(message:String){
-    Toast.makeText(LocalContext.current, message, Toast.LENGTH_SHORT).show()
+fun showMessage(context: Context,message:String){
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }

@@ -51,7 +51,10 @@ fun CustomTextField(
             if (text.isNotEmpty()) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_close_24),
-                    contentDescription = "close"
+                    contentDescription = "close",
+                    modifier = Modifier.clickable {
+                        text = ""
+                    }
                 )
             }
         }
