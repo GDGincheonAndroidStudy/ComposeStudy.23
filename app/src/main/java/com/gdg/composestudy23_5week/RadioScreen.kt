@@ -2,6 +2,7 @@ package com.gdg.composestudy23_5week
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,17 +15,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -39,9 +41,11 @@ import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.gdg.composestudy23_5week.supports.noRippleClickable
 import com.gdg.composestudy23_5week.ui.theme.KawaiBlue
 import com.gdg.composestudy23_5week.ui.theme.KawaiRed
 
@@ -53,10 +57,14 @@ fun RadioScreen(modifier: Modifier, onPositionYChange: (Float) -> Unit) {
             .fillMaxSize()
             .verticalScroll(scrollState)
     ) {
-        Column(modifier = Modifier.padding(horizontal = 16.dp).padding(top = 8.dp)
-            .onPlaced {
-                onPositionYChange(it.positionInRoot().y)
-            }) {
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = 8.dp)
+                .onPlaced {
+                    onPositionYChange(it.positionInRoot().y)
+                }
+        ) {
             Text(
                 text = "Radio",
                 style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.Bold)
@@ -86,14 +94,42 @@ fun RadioScreen(modifier: Modifier, onPositionYChange: (Float) -> Unit) {
                     tint = Color.Gray
                 )
             }
+        }
 
-            Row {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            repeat(6) {
+                if (it == 0 || it == 5)
+                    Spacer(modifier = Modifier.width(4.dp))
 
+                Column(modifier = Modifier.size(200.dp)) {
+                    Card(
+                        modifier = modifier
+                            .size(200.dp),
+                        backgroundColor = KawaiBlue
+                    ) {
+                        Text(text = "K-Pop", style = MaterialTheme.typography.h6)
+                    }
+                    Text(text = "K-Pop Station", style = MaterialTheme.typography.body1)
+                    Text(
+                        text = "Super kawai pangmoo's music asdasddasdadasd",
+                        style = MaterialTheme.typography.body2.copy(),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1
+                    )
+                }
             }
+        }
 
+        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             Text(
                 text = "More to Explore",
-                style = MaterialTheme.typography.h6.copy(fontWeight = FontWeight.Bold)
+                style = MaterialTheme.typography.h6.copy(fontWeight = FontWeight.Bold),
+                modifier = Modifier.padding(top = 16.dp)
             )
             Divider(modifier = Modifier.padding(top = 12.dp))
         }
@@ -127,7 +163,7 @@ private fun Item() {
             Text(
                 text = "Apple Music 1",
                 style = MaterialTheme.typography.h6.copy(
-                    color = Color.Black,
+                    color = MaterialTheme.colors.onBackground,
                     fontWeight = FontWeight.ExtraBold
                 )
             )
@@ -161,7 +197,7 @@ private fun Item() {
             modifier = Modifier,
             shape = RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp),
             color = KawaiBlue,
-            contentColor = Color.White
+            contentColor = MaterialTheme.colors.background
         ) {
             Row(
                 modifier = Modifier.padding(16.dp),

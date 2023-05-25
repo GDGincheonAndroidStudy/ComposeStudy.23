@@ -3,14 +3,22 @@ package com.gdg.composestudy23_5week
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.gdg.composestudy23_5week.presentation.settings.SettingsScreen
 import com.gdg.composestudy23_5week.ui.components.Header
 import com.gdg.composestudy23_5week.ui.components.KawaiBottomNavigation
 import com.gdg.composestudy23_5week.ui.theme.ComposeStudy235weekTheme
@@ -28,24 +36,63 @@ class MainActivity : ComponentActivity() {
                         mutableStateOf(0f)
                     }
 
+                    var visibleSettings by remember {
+                        mutableStateOf(false)
+                    }
+
                     Column(modifier = Modifier.fillMaxSize()) {
-                        Header(title = "Radio", subHeaderPositionY = subHeaderPositionY)
+                        Header(
+                            title = "Radio",
+                            subHeaderPositionY = subHeaderPositionY,
+                            visibleSettings = true,
+                            onClickSettings = {
+                                visibleSettings = true
+                            },
+                        )
                         when (screenState) {
-                            ScreenState.ListenNow -> {}
-                            ScreenState.Browse -> {}
+                            ScreenState.ListenNow -> KAWAI(modifier = Modifier.weight(1f))
+                            ScreenState.Browse -> KAWAI(modifier = Modifier.weight(1f))
                             ScreenState.Radio -> RadioScreen(modifier = Modifier.weight(1f)) {
                                 subHeaderPositionY = it
                             }
 
-                            ScreenState.Library -> {}
-                            ScreenState.Search -> {}
+                            ScreenState.Library -> KAWAI(modifier = Modifier.weight(1f))
+                            ScreenState.Search -> KAWAI(modifier = Modifier.weight(1f))
                         }
-                        KawaiBottomNavigation(screenState = screenState, onStateChange = {
-                            screenState = it
-                        })
+                        KawaiBottomNavigation(
+                            screenState = screenState,
+                            onStateChange = {
+                                screenState = it
+                            }
+                        )
+                    }
+
+                    AnimatedVisibility(
+                        visible = visibleSettings,
+                        enter = fadeIn() + slideInVertically(
+                            initialOffsetY = {
+                                it
+                            }
+                        ),
+                        exit = fadeOut() + slideOutVertically(
+                            targetOffsetY = {
+                                it
+                            }
+                        )
+                    ) {
+                        SettingsScreen(
+                            onClose = {
+                                visibleSettings = false
+                            }
+                        )
                     }
                 }
             }
         }
     }
+}
+
+@Composable
+private fun KAWAI(modifier: Modifier) {
+    Box(modifier = modifier)
 }

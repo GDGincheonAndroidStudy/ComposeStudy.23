@@ -4,17 +4,24 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -25,13 +32,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Header(title: String, subHeaderPositionY: Float) {
+fun Header(
+    title: String,
+    subHeaderPositionY: Float = 0f,
+    visibleBack: Boolean = false,
+    visibleSettings: Boolean = false,
+    onClickBack: () -> Unit = {},
+    onClickSettings: () -> Unit = {}
+) {
+    var expanded by remember {
+        mutableStateOf(false)
+    }
+
     val targetAlpha = remember(subHeaderPositionY) {
         ((160 - subHeaderPositionY) / 100).coerceIn(0f, 1f)
     }
-    val targetPadding = maxOf(0.dp, (subHeaderPositionY - 100).dp)
+    val targetPadding = remember(subHeaderPositionY) {
+        maxOf(0.dp, (subHeaderPositionY - 100).dp)
+    }
 
-    Row(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(64.dp)
@@ -44,25 +64,56 @@ fun Header(title: String, subHeaderPositionY: Float) {
                     alpha = targetAlpha
                 )
             }
-            .background(Color.White)
-            .padding(start = 16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+            .background(MaterialTheme.colors.background)
     ) {
+        if (visibleBack) {
+            IconButton(onClick = onClickBack, modifier = Modifier.align(Alignment.CenterStart)) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back",
+                    tint = MaterialTheme.colors.primary
+                )
+            }
+        }
+
         Text(
             text = title,
-            style = MaterialTheme.typography.h6,
             modifier = Modifier
-                .padding(top = targetPadding)
-                .alpha(targetAlpha)
+                .then(if (visibleBack) Modifier.align(Alignment.Center) else Modifier.align(Alignment.CenterStart))
+                .padding(top = targetPadding, start = 16.dp)
+                .alpha(targetAlpha),
+            style = MaterialTheme.typography.h6,
         )
-        Menu()
+
+        if (visibleSettings) {
+            Box(
+                modifier = Modifier.align(Alignment.CenterEnd)
+            ) {
+                Menu(onClickSettings = { expanded = true })
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                ) {
+                    DropdownMenuItem(onClick = {
+                        onClickSettings()
+                        expanded = false
+                    }) {
+                        Text(text = "Settings")
+                    }
+                    DropdownMenuItem(onClick = { expanded = false }) {
+                        Text(text = "Account")
+                    }
+                }
+            }
+        } else {
+            Box(Modifier)
+        }
     }
 }
 
 @Composable
-private fun Menu() {
-    IconButton(onClick = { /*TODO*/ }) {
+private fun Menu(onClickSettings: () -> Unit) {
+    IconButton(onClick = onClickSettings) {
         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
             repeat(3) {
                 Box(
