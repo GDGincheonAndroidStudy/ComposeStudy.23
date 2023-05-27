@@ -40,12 +40,6 @@ class MainActivity : ComponentActivity() {
                                     )
                                 }
                             },
-//                            modifier = Modifier.drawBehind { drawLine(
-//                                color = Color.DarkGray,
-//                                start = Offset(x = 0f, y = 0f),
-//                                end = Offset(x = size.width, y = 0f),
-//                                strokeWidth = 2f
-//                            ) }
                         )
                     },
                     bottomBar = { BottomNavigation(navController = navController) }) {
