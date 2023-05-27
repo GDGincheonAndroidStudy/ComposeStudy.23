@@ -65,7 +65,7 @@ fun Screen(viewModel: SearchViewModel) {
                 SearchEmptyScreen(viewModel = viewModel)
             }
             is SearchState.Searching -> {
-                SearchingScreen()
+                SearchingScreen(viewModel = viewModel)
             }
             is SearchState.Fill -> {
 
