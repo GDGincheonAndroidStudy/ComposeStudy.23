@@ -1,4 +1,4 @@
-package com.gdg.composestudy23_5week
+package com.gdg.composestudy23_5week.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

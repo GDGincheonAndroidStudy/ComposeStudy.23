@@ -1,4 +1,4 @@
-package com.gdg.composestudy23_5week
+package com.gdg.composestudy23_5week.model
 
 sealed class ListItem {
     data class MusicStation(

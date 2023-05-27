@@ -1,6 +1,8 @@
-package com.gdg.composestudy23_5week
+package com.gdg.composestudy23_5week.ui
 
 import androidx.lifecycle.ViewModel
+import com.gdg.composestudy23_5week.R
+import com.gdg.composestudy23_5week.model.ListItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

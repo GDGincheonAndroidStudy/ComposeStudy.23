@@ -1,4 +1,4 @@
-package com.gdg.composestudy23_5week
+package com.gdg.composestudy23_5week.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -8,8 +8,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.PlayCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -19,23 +17,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.LightGray
-import androidx.compose.ui.graphics.Color.Companion.Unspecified
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.gdg.composestudy23_5week.R
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(navigateToSearchDetail: () -> Unit) {
+fun SearchScreen(navigateToSearchDetail: () -> Unit, navigateToSettings: () -> Unit) {
     val viewModel: SearchViewModel = hiltViewModel()
 
     Scaffold(
-        topBar = { AppleMusicCloneAppBar("검색") }
+        topBar = { AppleMusicCloneAppBar("검색", navigateToSettings) }
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier.padding(paddingValues).fillMaxSize()
@@ -67,8 +65,11 @@ fun SearchScreen(navigateToSearchDetail: () -> Unit) {
                     R.drawable.img_box_6
                 )
             }
-            items(40) {
-                Text("Hello ${viewModel.text}")
+            item {
+                SearchTitle("카테고리 둘러보기")
+            }
+            items(20) {
+                MusicItemsRow()
             }
         }
     }
@@ -77,7 +78,7 @@ fun SearchScreen(navigateToSearchDetail: () -> Unit) {
 @Composable
 fun DemoContainer(title: String, description: String, resId: Int) {
     Surface(
-        modifier = Modifier.padding(start = 16.dp, top = 0.dp, end = 16.dp, bottom = 35.dp),
+        modifier = Modifier.padding(horizontal = 16.dp),
         shape = RoundedCornerShape(15.dp),
         shadowElevation = 4.dp
     ) {
@@ -97,7 +98,7 @@ fun DemoContainer(title: String, description: String, resId: Int) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = White)
+                    .background(color = MaterialTheme.colorScheme.background)
                     .padding(10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -122,5 +123,59 @@ fun DemoContainer(title: String, description: String, resId: Int) {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun SearchTitle(title: String) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 5.dp)
+    ) {
+        Text(
+            text = title,
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
+            color = Color.Black
+        )
+    }
+}
+
+@Composable
+fun MusicItemsRow() {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        MusicListItem("Test1")
+        MusicListItem("Test2")
+    }
+}
+
+@Composable
+fun MusicListItem(category: String) {
+    Box(
+        Modifier.height(130.dp)
+    ) {
+        Image(
+            painter = painterResource(R.drawable.img_izone),
+            contentDescription = "",
+            modifier = Modifier
+                .padding(all = 5.dp)
+                .clip(shape = RoundedCornerShape(10.dp)),
+            contentScale = ContentScale.Crop,
+        )
+        Text(
+            text = category,
+            modifier = Modifier.padding(all= 10.dp).align(Alignment.BottomStart),
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 15.sp,
+            color = White
+        )
     }
 }

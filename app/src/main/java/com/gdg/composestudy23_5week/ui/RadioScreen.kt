@@ -1,4 +1,4 @@
-package com.gdg.composestudy23_5week
+package com.gdg.composestudy23_5week.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,13 +24,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.gdg.composestudy23_5week.model.ListItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RadioScreen() {
+fun RadioScreen(navigateToSettings: () -> Unit) {
     val viewModel: RadioViewModel = hiltViewModel()
 
-    Scaffold(topBar = { AppleMusicCloneAppBar("라디오") }) { paddingValues ->
+    Scaffold(topBar = { AppleMusicCloneAppBar("라디오", navigateToSettings) }) { paddingValues ->
         LazyColumn(modifier = Modifier.padding(paddingValues).fillMaxSize()) {
             item {
                 TitleHeader("라디오")

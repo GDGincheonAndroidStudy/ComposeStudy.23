@@ -1,4 +1,4 @@
-package com.gdg.composestudy23_5week
+package com.gdg.composestudy23_5week.model
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
