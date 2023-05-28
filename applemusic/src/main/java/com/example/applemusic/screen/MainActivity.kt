@@ -27,6 +27,7 @@ import com.example.applemusic.ui.theme.GdgStudyTheme
 import com.example.applemusic.widget.BottomNavigation
 import com.example.applemusic.R
 import com.example.applemusic.screen.search.SearchActivity
+import com.example.applemusic.screen.setting.SettingActivity
 import com.example.applemusic.widget.SettingDialog
 
 
@@ -41,7 +42,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Scaffold(
                     topBar = {
-                        AppleMusicTopAppBar(isDropDownMenuExpanded = isDropDownMenuExpanded) {
+                        AppleMusicTopAppBar(isDropDownMenuExpanded = isDropDownMenuExpanded, moveSettingActivity = { moveSettingActivity() }) {
                             isDropDownMenuExpanded = !isDropDownMenuExpanded
                         }
                     },
@@ -73,10 +74,14 @@ class MainActivity : ComponentActivity() {
     private fun moveSearchActivity() {
         startActivity(Intent(this, SearchActivity::class.java))
     }
+
+    private fun moveSettingActivity() {
+        startActivity(Intent(this, SettingActivity::class.java))
+    }
 }
 
 @Composable
-fun AppleMusicTopAppBar(isDropDownMenuExpanded: Boolean, showDropDownMenu: () -> Unit) {
+fun AppleMusicTopAppBar(isDropDownMenuExpanded: Boolean, moveSettingActivity: () -> Unit, showDropDownMenu: () -> Unit) {
     TopAppBar(
         title = { Text(text = "") },
         actions = {
@@ -89,7 +94,7 @@ fun AppleMusicTopAppBar(isDropDownMenuExpanded: Boolean, showDropDownMenu: () ->
                 offset = DpOffset(0.dp, (-35).dp),
                 expanded = isDropDownMenuExpanded,
                 onDismissRequest = { showDropDownMenu() }) {
-                DropdownMenuItem(onClick = { /*TODO*/ }) {
+                DropdownMenuItem(onClick = { moveSettingActivity() }) {
                     Text(text = "설정")
                 }
                 DropdownMenuItem(onClick = { /*TODO*/ }) {

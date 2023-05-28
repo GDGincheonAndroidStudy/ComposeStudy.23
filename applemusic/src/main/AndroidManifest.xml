@@ -9,8 +9,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.GdgStudy"
-        android:usesCleartextTraffic="true"
-        >
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".screen.setting.SettingActivity"
+            android:exported="false" />
         <activity
             android:name=".screen.MainActivity"
             android:exported="true"
