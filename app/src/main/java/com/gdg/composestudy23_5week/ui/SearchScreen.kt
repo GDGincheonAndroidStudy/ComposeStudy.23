@@ -158,9 +158,9 @@ fun MusicItemsRow() {
 }
 
 @Composable
-fun MusicListItem(category: String) {
+fun RowScope.MusicListItem(category: String) {
     Box(
-        Modifier.height(130.dp)
+        Modifier.weight(1f).height(130.dp)
     ) {
         Image(
             painter = painterResource(R.drawable.img_izone),
