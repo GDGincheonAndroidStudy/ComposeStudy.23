@@ -3,13 +3,19 @@ package com.example.applemusic.widget
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.applemusic.R
 import com.example.applemusic.data.MusicChart
 
 @Composable
@@ -30,11 +36,29 @@ fun MusicCard(musicChart: MusicChart) {
                 modifier = Modifier.fillMaxSize()
             )
         }
-
-        Column(modifier = Modifier.padding(start = 16.dp)) {
-            Text(text = musicChart.title)
-            Text(text = "노래 ․ ${musicChart.artist[0]}")
+        Row(
+            modifier = Modifier
+                .weight(1.0f)
+                .fillMaxHeight(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(modifier = Modifier.padding(start = 16.dp)) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(0.5f),
+                    text = musicChart.title,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1
+                )
+                Text(text = "노래 ․ ${musicChart.artist[0]}")
+            }
+            Icon(
+                modifier = Modifier.size(18.dp),
+                imageVector = Icons.Default.MoreVert,
+                contentDescription = ""
+            )
         }
+
     }
     Divider(thickness = 1.dp)
 

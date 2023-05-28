@@ -10,7 +10,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.applemusic.data.MusicChart
@@ -19,24 +18,32 @@ import com.example.applemusic.widget.MusicCard
 
 @Composable
 fun SearchingScreen(viewModel: SearchViewModel) {
-    var searchList = remember {
+    val searchList = remember {
         mutableStateOf(emptyList<MusicChart>())
     }
-    LaunchedEffect(viewModel.text.value) {
+    val autoCompleteList = remember {
+        mutableStateListOf<String>()
+    }
 
+    LaunchedEffect(viewModel.text.value) {
         searchList.value = viewModel.musicList.value.filter {
             it.title.contains(viewModel.text.value, ignoreCase = true)
         }
-//        searchList = searchList2.toMutableStateList()
-        Log.d("daeYoung", "text: ${viewModel.text.value}")
-        Log.d("daeYoung", "${searchList.value}")
+        searchList.value.forEach {
+            autoCompleteList.add(it.title)
+        }
+        Log.d("daeYoung", "list: ${searchList}")
     }
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(modifier = Modifier.padding(16.dp), text = "APPLE MUSIC", color = MaterialTheme.colors.secondary, fontWeight = FontWeight.Bold)
         Divider(thickness = 1.dp, color = MaterialTheme.colors.secondary, )
-        AutoCompleteCard(autoCompleteText = viewModel.text.value)
+
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
+            for (i in 0 until searchList.value.size) {
+                item { AutoCompleteCard(inputText = viewModel.text.value, autoCompleteText = searchList.value[i].title) }
+                if (i == 3) break
+            }
             items(searchList.value.size) {
                 MusicCard(musicChart = searchList.value[it])
             }
