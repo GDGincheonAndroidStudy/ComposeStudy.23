@@ -17,6 +17,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -82,17 +84,19 @@ fun AppleMusicTopAppBar(isDropDownMenuExpanded: Boolean, showDropDownMenu: () ->
                 onClick = { showDropDownMenu() }) {
                 Icon(imageVector = Icons.Default.MoreVert, contentDescription = "show Option Menu")
             }
+            DropdownMenu(
+                modifier = Modifier.wrapContentSize(),
+                offset = DpOffset(0.dp, (-35).dp),
+                expanded = isDropDownMenuExpanded,
+                onDismissRequest = { showDropDownMenu() }) {
+                DropdownMenuItem(onClick = { /*TODO*/ }) {
+                    Text(text = "설정")
+                }
+                DropdownMenuItem(onClick = { /*TODO*/ }) {
+                    Text(text = "계정")
+                }
+            }
         },
     )
-    DropdownMenu(
-        modifier = Modifier.wrapContentSize(),
-        expanded = isDropDownMenuExpanded,
-        onDismissRequest = { showDropDownMenu() }) {
-        DropdownMenuItem(onClick = { /*TODO*/ }) {
-            Text(text = "설정")
-        }
-        DropdownMenuItem(onClick = { /*TODO*/ }) {
-            Text(text = "계정")
-        }
-    }
+
 }
