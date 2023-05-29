@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.gdg.composestudy23_5week.R
 import com.gdg.composestudy23_5week.component.CustomScaffold
 import com.gdg.composestudy23_5week.component.ThemeDialog
@@ -41,7 +42,7 @@ import com.gdg.composestudy23_5week.component.ThemeRadioButton
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun SettingScreen(
-    navigateToBack: () -> Unit
+    navigateToBack: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
     CustomScaffold(
@@ -204,9 +205,11 @@ fun DisplayOptionRow() {
             // modifier = Modifier.padding(vertical = 12.dp)
         )
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
-        Box(modifier = Modifier.fillMaxWidth().clickable {
-            isOpenDialog.value = true
-        }) {
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                isOpenDialog.value = true
+            }) {
             Column {
                 Text(
                     text = "테마",
@@ -275,7 +278,7 @@ fun ThemeDialog(
                 Text(text = "테마", fontWeight = FontWeight.Bold)
             },
             text = {
-                ThemeRadioButton()
+                ThemeRadioButton(isOpenDialog)
             },
             confirmButton = {
                 Text(text = "취소", color = Color.Red, modifier = Modifier
@@ -284,7 +287,8 @@ fun ThemeDialog(
                         isOpenDialog.value = false
                     }
                 )
-            }
+            },
+
         )
     }
 }
