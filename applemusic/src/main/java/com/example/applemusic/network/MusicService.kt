@@ -5,8 +5,5 @@ import retrofit2.http.*
 
 interface MusicService {
     @GET("melonChart.php")
-//    @Headers(
-//        "accept: application/x-httpd-php",
-//    )
-    suspend fun getMusicList():List<MusicChart>
+    suspend fun getMusicList(): List<MusicChart>
 }

@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="light_color">#FF9fa1a0</color>
     <color name="real_light_color">#FFdbdbdb</color>
+    <color name="pink">#FFff9c9c</color>
 
 
 </resources>

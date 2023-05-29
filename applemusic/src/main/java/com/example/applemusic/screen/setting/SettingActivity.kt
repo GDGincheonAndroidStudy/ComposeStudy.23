@@ -3,11 +3,9 @@ package com.example.applemusic.screen.setting
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
@@ -22,7 +20,7 @@ class SettingActivity : ComponentActivity() {
         setContent {
             GdgStudyTheme {
                 Scaffold(
-                    topBar = { SettingTopAppBar() }
+                    topBar = { SettingTopAppBar() { finish() } }
                 ) {
                     SettingScreen(modifier = Modifier.padding(it))
                 }
@@ -32,13 +30,16 @@ class SettingActivity : ComponentActivity() {
 }
 
 @Composable
-fun SettingTopAppBar() {
+fun SettingTopAppBar(finish: () -> Unit) {
     TopAppBar(title = { Text(text = "설정") },
         navigationIcon = {
-            Icon(
-                modifier = Modifier.padding(start = 8.dp),
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "뒤로가기"
-            )
+            IconButton(onClick = { finish() }) {
+                Icon(
+                    modifier = Modifier,
+                    tint = MaterialTheme.colors.secondary,
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "뒤로가기"
+                )
+            }
         })
 }
