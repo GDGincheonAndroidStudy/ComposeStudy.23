@@ -1,5 +1,6 @@
 package com.example.applemusic.screen.setting
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -10,17 +11,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.applemusic.R
 
 @Composable
-fun SettingScreen(modifier: Modifier = Modifier) {
+fun SettingScreen(modifier: Modifier = Modifier, setAppTheme: (AppTheme) -> Unit) {
     var isDialog by remember {
         mutableStateOf(false)
     }
     if (isDialog) {
-        Dialog() { isDialog = !isDialog }
+        Dialog(setAppTheme) { isDialog = !isDialog }
     }
     Column(
         modifier = Modifier
@@ -97,7 +97,7 @@ fun SwitchRow(text: String) {
 }
 
 @Composable
-fun Dialog(close: () -> Unit) {
+fun Dialog(setAppTheme: (AppTheme) -> Unit, close: () -> Unit) {
     androidx.compose.ui.window.Dialog(onDismissRequest = { close() }) {
         Surface(
             modifier = Modifier
@@ -106,17 +106,27 @@ fun Dialog(close: () -> Unit) {
             shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colors.primary
         ) {
-            DialogContent()
+            DialogContent(setAppTheme)
         }
     }
 }
 
 @Composable
-fun DialogContent() {
+fun DialogContent(setAppTheme: (AppTheme) -> Unit) {
     val radioOptions = listOf("밝게", "어둡게", "시스템 기본")
+    val radioOptions2 = mapOf<String, AppTheme>(
+        "밝게" to AppTheme.Light,
+        "어둡게" to AppTheme.Dark,
+        "시스템 기본" to AppTheme.System
+    )
 
-    var selectedItem by remember {
-        mutableStateOf(radioOptions[0])
+
+//    var selectedItem by remember {
+//        mutableStateOf(radioOptions[0])
+//    }
+
+    var selectedItem2 by remember {
+        mutableStateOf(radioOptions2.keys.firstOrNull())
     }
 
 
@@ -125,23 +135,27 @@ fun DialogContent() {
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        Text(modifier = Modifier.padding(start = 12.dp), text = "테마", style = MaterialTheme.typography.h4)
+        Text(
+            modifier = Modifier.padding(start = 12.dp),
+            text = "테마",
+            style = MaterialTheme.typography.h4
+        )
         radioOptions.forEach { label ->
             Row(
-                modifier = Modifier.fillMaxWidth().padding(start = 0.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 0.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
             ) {
-                RadioButton(selected = (selectedItem == label), onClick = { selectedItem = label })
+                RadioButton(selected = (selectedItem2 == label), onClick = {
+                    selectedItem2 = label
+                    radioOptions2.get(selectedItem2)?.let { setAppTheme(it) }
+                    Log.d("daeYoung", "현재 상태: ${radioOptions2.get(selectedItem2)}")
+                })
                 Text(text = label)
             }
         }
 
     }
-}
-
-@Composable
-@Preview(showBackground = true)
-fun PreviewDialog() {
-    Dialog({})
 }
