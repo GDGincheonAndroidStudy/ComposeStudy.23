@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.example.applemusic.R
 
 @Composable
-fun CategoryImageCard(modifier: Modifier = Modifier) {
+fun CategoryMainImageCard(modifier: Modifier = Modifier) {
     Card(
         modifier = modifier.height(100.dp),
         shape = MaterialTheme.shapes.medium

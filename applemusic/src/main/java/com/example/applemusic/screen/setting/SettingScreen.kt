@@ -120,15 +120,9 @@ fun DialogContent(setAppTheme: (AppTheme) -> Unit) {
         "시스템 기본" to AppTheme.System
     )
 
-
-//    var selectedItem by remember {
-//        mutableStateOf(radioOptions[0])
-//    }
-
     var selectedItem2 by remember {
         mutableStateOf(radioOptions2.keys.firstOrNull())
     }
-
 
     Column(
         modifier = Modifier

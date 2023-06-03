@@ -1,4 +1,4 @@
-package com.example.applemusic.widget
+package com.example.applemusic.widget.radio
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.size
@@ -16,20 +16,18 @@ import androidx.compose.ui.unit.dp
 import com.example.applemusic.R
 
 @Composable
-fun CustomIconButton(icon: Painter, color: Color, modifier: Modifier) {
+fun CustomIconButton(icon: Painter, color: Color, modifier: Modifier = Modifier) {
     IconButton(onClick = { /*TODO*/ }, modifier = Modifier
         .clip(CircleShape)
         .background(
-            color = colorResource(
-                id = R.color.real_light_color
-            )
+            color = colorResource(id = R.color.real_light_color)
         )
-        .size(32.dp)) {
+        .size(40.dp)) {
         Icon(
             painter = icon,
             contentDescription = "calender",
             tint = color,
-            modifier = Modifier.size(16.dp)
+            modifier = modifier.size(20.dp)
         )
     }
 }

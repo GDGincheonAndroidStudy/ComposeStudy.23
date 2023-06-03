@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
@@ -26,6 +27,7 @@ import com.example.applemusic.data.BottomNavItem
 import com.example.applemusic.ui.theme.GdgStudyTheme
 import com.example.applemusic.widget.BottomNavigation
 import com.example.applemusic.R
+import com.example.applemusic.screen.radio.CalenderScreen
 import com.example.applemusic.screen.search.SearchActivity
 import com.example.applemusic.screen.setting.SettingActivity
 import com.example.applemusic.widget.SettingDialog
@@ -37,12 +39,49 @@ class MainActivity : ComponentActivity() {
         setContent {
             var isDropDownMenuExpanded by remember { mutableStateOf<Boolean>(false) }
 
+            val calenderList1 = listOf(
+                painterResource(id = R.drawable.bottom_sheet_music1),
+                painterResource(id = R.drawable.bottom_sheet_music2),
+                painterResource(id = R.drawable.bottom_sheet_music3),
+                painterResource(id = R.drawable.bottom_sheet_music1),
+                painterResource(id = R.drawable.bottom_sheet_music2),
+                painterResource(id = R.drawable.bottom_sheet_music3),
+                painterResource(id = R.drawable.bottom_sheet_music1),
+                painterResource(id = R.drawable.bottom_sheet_music2),
+                painterResource(id = R.drawable.bottom_sheet_music3),
+            )
+            val calenderList2 = listOf(
+                painterResource(id = R.drawable.bottom_sheet_music1),
+                painterResource(id = R.drawable.bottom_sheet_music2),
+                painterResource(id = R.drawable.bottom_sheet_music3),
+                painterResource(id = R.drawable.bottom_sheet_music1),
+                painterResource(id = R.drawable.bottom_sheet_music2),
+                painterResource(id = R.drawable.bottom_sheet_music3),
+                painterResource(id = R.drawable.bottom_sheet_music1),
+                painterResource(id = R.drawable.bottom_sheet_music2),
+                painterResource(id = R.drawable.bottom_sheet_music3),
+            )
+            val calenderList3 = listOf(
+                painterResource(id = R.drawable.bottom_sheet_music1),
+                painterResource(id = R.drawable.bottom_sheet_music2),
+                painterResource(id = R.drawable.bottom_sheet_music3),
+                painterResource(id = R.drawable.bottom_sheet_music1),
+                painterResource(id = R.drawable.bottom_sheet_music2),
+                painterResource(id = R.drawable.bottom_sheet_music3),
+                painterResource(id = R.drawable.bottom_sheet_music1),
+                painterResource(id = R.drawable.bottom_sheet_music2),
+                painterResource(id = R.drawable.bottom_sheet_music3),
+            )
+
+
             val navController = rememberNavController()
             GdgStudyTheme {
                 // A surface container using the 'background' color from the theme
                 Scaffold(
                     topBar = {
-                        AppleMusicTopAppBar(isDropDownMenuExpanded = isDropDownMenuExpanded, moveSettingActivity = { moveSettingActivity() }) {
+                        AppleMusicTopAppBar(
+                            isDropDownMenuExpanded = isDropDownMenuExpanded,
+                            moveSettingActivity = { moveSettingActivity() }) {
                             isDropDownMenuExpanded = !isDropDownMenuExpanded
                         }
                     },
@@ -58,10 +97,28 @@ class MainActivity : ComponentActivity() {
                             startDestination = BottomNavItem.RadioScreen.screenRoute
                         ) {
                             composable(BottomNavItem.RadioScreen.screenRoute) {
-                                RadioScreen()
+                                RadioScreen(navController = navController)
                             }
                             composable(BottomNavItem.SearchScreen.screenRoute) {
                                 SearchScreen() { moveSearchActivity() }
+                            }
+                            composable("calenderScreen1/{title}") { backStackEntry ->
+                                CalenderScreen(
+                                    title = backStackEntry.arguments?.getString("title") ?: "Miss",
+                                    musicList = calenderList1
+                                )
+                            }
+                            composable("calenderScreen2/{title}") { backStackEntry ->
+                                CalenderScreen(
+                                    title = backStackEntry.arguments?.getString("title") ?: "Miss",
+                                    musicList = calenderList1
+                                )
+                            }
+                            composable("calenderScreen3/{title}") { backStackEntry ->
+                                CalenderScreen(
+                                    title = backStackEntry.arguments?.getString("title") ?: "Miss",
+                                    musicList = calenderList1
+                                )
                             }
                         }
                     }
@@ -81,7 +138,11 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AppleMusicTopAppBar(isDropDownMenuExpanded: Boolean, moveSettingActivity: () -> Unit, showDropDownMenu: () -> Unit) {
+fun AppleMusicTopAppBar(
+    isDropDownMenuExpanded: Boolean,
+    moveSettingActivity: () -> Unit,
+    showDropDownMenu: () -> Unit
+) {
     TopAppBar(
         title = { Text(text = "") },
         actions = {

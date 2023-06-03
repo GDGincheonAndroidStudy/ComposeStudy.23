@@ -19,6 +19,11 @@ val Typography = Typography(
         fontSize = 20.sp,
         letterSpacing = 0.15.sp
     ),
+    h1 = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Bold,
+        fontSize = 40.sp,
+    ),
     h2 = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,

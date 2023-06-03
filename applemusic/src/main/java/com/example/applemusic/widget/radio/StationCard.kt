@@ -1,4 +1,4 @@
-package com.example.applemusic.widget
+package com.example.applemusic.widget.radio
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column

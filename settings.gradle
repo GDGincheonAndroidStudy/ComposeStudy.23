@@ -15,4 +15,3 @@ dependencyResolutionManagement {
 rootProject.name = "GdgStudy"
 include ':app'
 include ':applemusic'
-include ':autosearch'

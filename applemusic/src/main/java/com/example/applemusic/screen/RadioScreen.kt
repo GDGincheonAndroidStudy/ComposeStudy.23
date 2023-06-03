@@ -13,43 +13,56 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.applemusic.ButtonContent
+import androidx.navigation.NavController
+import com.example.applemusic.widget.radio.ButtonContent
 import com.example.applemusic.R
-import com.example.applemusic.data.DataClass
-import com.example.applemusic.ui.RadioCard
+import com.example.applemusic.data.RadioCardData
+import com.example.applemusic.widget.radio.RadioCard
 import com.example.applemusic.ui.theme.Shapes
-import com.example.applemusic.widget.StationCard
+import com.example.applemusic.widget.radio.StationCard
 import com.example.applemusic.widget.Title
 
 @Composable
-fun RadioScreen() {
+fun RadioScreen(navController: NavController) {
     val scrollState = rememberScrollState()
 
-    val list = listOf<DataClass>(
-        DataClass(
+    val titleList = listOf(
+        stringResource(id = R.string.radio_title1),
+        stringResource(id = R.string.radio_title2),
+        stringResource(id = R.string.radio_title3)
+    )
+
+    val radioCardList = listOf<RadioCardData>(
+        RadioCardData(
             title = stringResource(id = R.string.radio_title1),
             subTitle = stringResource(id = R.string.radio_description1),
             time = stringResource(id = R.string.radio_time1),
             imageTitle = stringResource(id = R.string.radio_image_tile1),
             imageDescription = stringResource(id = R.string.radio_image_description1),
+            bottomSheetImage = painterResource(id = R.drawable.bottom_sheet_music1),
+            moveScreen = { navController.navigate("calenderScreen1/${titleList[0]}") }
         ),
-        DataClass(
+        RadioCardData(
             title = stringResource(id = R.string.radio_title2),
             subTitle = stringResource(id = R.string.radio_description2),
             time = stringResource(id = R.string.radio_time2),
             imageTitle = stringResource(id = R.string.radio_image_tile2),
             imageDescription = stringResource(id = R.string.radio_image_description2),
+            bottomSheetImage = painterResource(id = R.drawable.bottom_sheet_music2),
+            moveScreen = { navController.navigate("calenderScreen2/${titleList[1]}") }
         ),
-        DataClass(
+        RadioCardData(
             title = stringResource(id = R.string.radio_title3),
             subTitle = stringResource(id = R.string.radio_description3),
             time = stringResource(id = R.string.radio_time3),
             imageTitle = stringResource(id = R.string.radio_image_tile3),
             imageDescription = stringResource(id = R.string.radio_image_description3),
+            bottomSheetImage = painterResource(id = R.drawable.bottom_sheet_music3),
+            moveScreen = { navController.navigate("calenderScreen3/${titleList[2]}") }
         ),
     )
 
@@ -69,11 +82,8 @@ fun RadioScreen() {
 
     val colorStops = arrayOf(
         0.0f to colorResource(id = R.color.purple_200),
-//        0.2f to Color.Red,
         1f to Color.Blue
     )
-
-
 
 
     Column(
@@ -91,9 +101,11 @@ fun RadioScreen() {
             shape = Shapes.medium,
             border = BorderStroke(width = 0.dp, color = Color.Transparent)
         ) {
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .background(Brush.horizontalGradient(colorStops = colorStops))) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Brush.horizontalGradient(colorStops = colorStops))
+            ) {
                 ButtonContent()
             }
         }
@@ -103,13 +115,15 @@ fun RadioScreen() {
         Title(title = stringResource(id = R.string.radio_title))
         Divider(thickness = 1.dp, modifier = Modifier.padding(top = 12.dp))
 
-        list.forEach {
+        radioCardList.forEach {
             RadioCard(
                 title = it.title,
                 subTitle = it.subTitle,
                 time = it.time,
                 imageTitle = it.imageTitle,
-                imageDescription = it.imageDescription
+                imageDescription = it.imageDescription,
+                bottomSheetImage = it.bottomSheetImage,
+                moveScreen = it.moveScreen,
             )
         }
 
@@ -131,11 +145,4 @@ fun RadioScreen() {
         }
 
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewComposable() {
-    RadioScreen()
 }

@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.applemusic.R
-import com.example.applemusic.widget.CategoryImageCard
+import com.example.applemusic.widget.CategoryMainImageCard
 import com.example.applemusic.widget.Title
 
 @Composable
@@ -37,9 +37,9 @@ fun SearchScreen(moveActivity: () -> Unit) {
         Text(text = "카테고리 둘러보기", style = MaterialTheme.typography.h4, modifier = Modifier.padding(vertical = 16.dp))
         repeat(5) {
             Row(modifier = Modifier.padding(bottom = 8.dp)) {
-                CategoryImageCard(modifier = Modifier.weight(0.5f))
+                CategoryMainImageCard(modifier = Modifier.weight(0.5f))
                 Spacer(modifier = Modifier.width(16.dp))
-                CategoryImageCard(modifier = Modifier.weight(0.5f))
+                CategoryMainImageCard(modifier = Modifier.weight(0.5f))
             }
 
         }
