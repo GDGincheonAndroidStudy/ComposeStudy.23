@@ -11,6 +11,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.Dashboard
 import androidx.compose.material.icons.rounded.HorizontalSplit
 import androidx.compose.material.icons.rounded.OnlinePrediction
@@ -28,6 +29,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.gdg.composestudy23_5week.ui.radio.RadioScheduleScreen
 import com.gdg.composestudy23_5week.ui.radio.RadioScreen
 import com.gdg.composestudy23_5week.ui.search.SearchScreen
 import com.gdg.composestudy23_5week.ui.theme.DeepGray
@@ -107,7 +109,7 @@ fun BottomNavigation(navController: NavHostController) {
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = BottomNavItem.Search.screenRoute) {
+    NavHost(navController = navController, startDestination = BottomNavItem.Radio.screenRoute) {
         composable(BottomNavItem.Listen.screenRoute) {}
         composable(BottomNavItem.Browse.screenRoute) {}
         composable(BottomNavItem.Radio.screenRoute) {
