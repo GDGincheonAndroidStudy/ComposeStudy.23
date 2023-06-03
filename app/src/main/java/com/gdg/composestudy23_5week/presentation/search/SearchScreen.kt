@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import kotlinx.coroutines.flow.debounce
 
 @Composable
-fun SearchScreen() {
-    Column {
+fun SearchScreen(modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
         var (query, setQuery) = remember {
             mutableStateOf("")
         }

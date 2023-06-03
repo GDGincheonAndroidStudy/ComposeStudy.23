@@ -1,4 +1,4 @@
-package com.gdg.composestudy23_5week
+package com.gdg.composestudy23_5week.presentation
 
 enum class ScreenState(val text: String) {
     ListenNow("Listen Now"),

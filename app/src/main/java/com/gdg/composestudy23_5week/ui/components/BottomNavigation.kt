@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
-import com.gdg.composestudy23_5week.ScreenState
+import com.gdg.composestudy23_5week.presentation.ScreenState
 
 @Composable
 fun KawaiBottomNavigation(screenState: ScreenState, onStateChange: (ScreenState) -> Unit) {
