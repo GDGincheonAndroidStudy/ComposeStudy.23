@@ -13,14 +13,14 @@ import com.gdg.composestudy23_5week.data.ThemeManager
 import com.gdg.composestudy23_5week.data.ThemeMode
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-private val DarkColorPalette = darkColors(
+val DarkColorPalette = darkColors(
     primary = KawaiRed,
     primaryVariant = Purple700,
     secondary = Teal200,
     onBackground = Color.White
 )
 
-private val LightColorPalette = lightColors(
+val LightColorPalette = lightColors(
     primary = KawaiRed,
     primaryVariant = Purple700,
     secondary = Teal200,
@@ -32,13 +32,7 @@ fun ComposeStudy235weekTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val themeMode by ThemeManager.themeMode.collectAsState()
-    val colors = when (themeMode) {
-        ThemeMode.LIGHT -> LightColorPalette
-        ThemeMode.DARK -> DarkColorPalette
-        ThemeMode.AUTO -> if (darkTheme) DarkColorPalette else LightColorPalette
-    }
-
+    val colors = ThemeManager.collectColors()
     val systemUiController = rememberSystemUiController()
 
     MaterialTheme(

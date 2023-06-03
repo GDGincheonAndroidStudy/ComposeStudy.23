@@ -1,8 +1,14 @@
-package com.gdg.composestudy23_5week
+@file:OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 
+package com.gdg.composestudy23_5week.presentation.radio
+
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +28,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -31,7 +38,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,13 +54,35 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.gdg.composestudy23_5week.R
 import com.gdg.composestudy23_5week.supports.noRippleClickable
 import com.gdg.composestudy23_5week.ui.theme.KawaiBlue
 import com.gdg.composestudy23_5week.ui.theme.KawaiRed
 
 @Composable
-fun RadioScreen(modifier: Modifier, onPositionYChange: (Float) -> Unit) {
+fun RadioScreen(
+    modifier: Modifier,
+    onPositionYChange: (Float) -> Unit,
+    onExpandAlbum: (Album) -> Unit
+) {
     val scrollState = rememberScrollState()
+    val albums = remember {
+        listOf(
+            Album(
+                section = "Charisma Music",
+                description = "The new music that matters.",
+                imageId = R.drawable.img_the_quiett,
+            ),
+            Album(
+                section = "Sexy Music",
+                description = "The sexy music that matters.",
+                imageId = R.drawable.img_jvcki_wai,
+            )
+        ).let {
+            it + it + it
+        }
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -72,8 +103,11 @@ fun RadioScreen(modifier: Modifier, onPositionYChange: (Float) -> Unit) {
             Divider(modifier = Modifier.padding(top = 8.dp))
             Spacer(modifier = Modifier.height(12.dp))
 
-            repeat(5) {
-                Item()
+            albums.forEach {
+                Item(
+                    album = it,
+                    onExpandAlbum = onExpandAlbum
+                )
                 Spacer(modifier = Modifier.height(32.dp))
             }
 
@@ -153,7 +187,10 @@ fun RadioScreen(modifier: Modifier, onPositionYChange: (Float) -> Unit) {
 }
 
 @Composable
-private fun Item() {
+private fun Item(
+    album: Album,
+    onExpandAlbum: (Album) -> Unit
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -161,14 +198,14 @@ private fun Item() {
     ) {
         Column {
             Text(
-                text = "Apple Music 1",
+                text = album.section,
                 style = MaterialTheme.typography.h6.copy(
                     color = MaterialTheme.colors.onBackground,
                     fontWeight = FontWeight.ExtraBold
                 )
             )
             Text(
-                text = "The new music that matters.",
+                text = album.description,
                 style = MaterialTheme.typography.body1.copy(color = Color.Gray)
             )
         }
@@ -181,14 +218,27 @@ private fun Item() {
         }
     }
 
-    Box(contentAlignment = Alignment.BottomCenter) {
+    Box(
+        modifier = Modifier
+            .padding(top = 12.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .combinedClickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(),
+                onClick = {
+                    println("SHORT")
+                },
+                onLongClick = {
+                    onExpandAlbum(album)
+                }
+            ),
+        contentAlignment = Alignment.BottomCenter
+    ) {
         Image(
-            painter = painterResource(id = R.drawable.img_the_quiett),
+            painter = painterResource(id = album.imageId),
             contentDescription = "TheQuiett Album",
             modifier = Modifier
-                .padding(top = 12.dp)
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(12.dp))
                 .aspectRatio(1.1f),
             contentScale = ContentScale.FillBounds
         )

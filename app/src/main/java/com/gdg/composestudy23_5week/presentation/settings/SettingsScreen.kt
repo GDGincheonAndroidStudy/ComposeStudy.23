@@ -147,25 +147,14 @@ private fun ThemeDialog(
             )
 
             Column(modifier = Modifier.padding(top = 8.dp)) {
-                RadioItem(
-                    text = "Light", selected = themeMode == ThemeMode.LIGHT,
-                    onClick = {
-                        changeTheme(ThemeMode.LIGHT)
-                    }
-                )
-                RadioItem(
-                    text = "Dark", selected = themeMode == ThemeMode.DARK,
-                    onClick = {
-                        changeTheme(ThemeMode.DARK)
-                    }
-                )
-                RadioItem(
-                    text = "System Default",
-                    selected = themeMode == ThemeMode.AUTO,
-                    onClick = {
-                        changeTheme(ThemeMode.AUTO)
-                    }
-                )
+                ThemeMode.values().forEach {
+                    RadioItem(
+                        text = it.text, selected = themeMode == it,
+                        onClick = {
+                            changeTheme(it)
+                        }
+                    )
+                }
             }
 
             Text(
