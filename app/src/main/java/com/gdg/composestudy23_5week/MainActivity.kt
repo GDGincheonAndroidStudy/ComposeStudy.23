@@ -40,9 +40,11 @@ class MainActivity : ComponentActivity() {
 fun MainScreen() {
     val navController = rememberNavController()
 
-    Scaffold(bottomBar = {
-        BottomNavigation(navController = navController)
-    }) {
+    Scaffold(
+        bottomBar = {
+            BottomNavigation(navController = navController)
+        }
+    ) {
         Box(modifier = Modifier.padding(it)) {
             NavigationGraph(navController = navController)
         }
@@ -51,7 +53,7 @@ fun MainScreen() {
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = BottomNavItem.Search.route) {
+    NavHost(navController = navController, startDestination = BottomNavItem.Radio.route) {
         composable(BottomNavItem.ListenNow.route) {
         }
         composable(BottomNavItem.Browse.route) {
