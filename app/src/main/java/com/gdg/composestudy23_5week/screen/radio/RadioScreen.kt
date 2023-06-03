@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -18,50 +20,117 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gdg.composestudy23_5week.R
 import com.gdg.composestudy23_5week.component.CustomScaffold
-import kotlin.text.Typography
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RadioScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val scaffoldState = rememberScaffoldState()
 
-    CustomScaffold(
-        modifier = modifier.fillMaxSize(),
-        scaffoldState = scaffoldState,
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "") },
-                backgroundColor = Color.White,
-                actions = {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(painter = painterResource(
-                            id = R.drawable.baseline_more_vert_24,),
-                            contentDescription = null,
-                            tint = Color.Red
-                        )
-                    }
-                }
-            )
-        },
-        content = {
-            Column(
-                modifier = modifier.fillMaxSize()
-            ) {
-                RadioCardItem(
-                    title = "Apple Music 1",
-                    subTitle = "놓쳐서 안 될 신곡",
-                    albumImage = R.drawable.img_new_jeans
-                )
-                Spacer(modifier = modifier.height(30.dp))
-                RadioCardItem(
-                    title = "Apple Music Hits",
-                    subTitle = "시대를 초월해 사랑받는 히트곡",
-                    albumImage = R.drawable.img_bts
-                )
-            }
-        }
+    val coroutineScope = rememberCoroutineScope()
+    val modalSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        confirmStateChange = { it != ModalBottomSheetValue.HalfExpanded },
+        skipHalfExpanded = true
     )
+
+    ModalBottomSheetLayout(
+        sheetState = modalSheetState,
+        sheetContent = {
+            /*Button(onClick = { coroutineScope.launch { modalSheetState.hide() } }) {
+                Text(text = "숨기기")
+            }*/
+            Column(
+                modifier = modifier.fillMaxWidth()
+            ) {
+                Row {
+                    Icon(
+                        modifier = modifier
+                            .wrapContentSize()
+                            .padding(20.dp),
+                        painter = painterResource(id = R.drawable.ic_launcher_background),
+                        contentDescription = ""
+                    )
+                    Text(
+                        modifier = modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 15.dp),
+                        text = "Apple Music Hits",
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                Divider(
+                    modifier = modifier.fillMaxWidth(),
+                    color = Color.LightGray,
+                    thickness = 0.5.dp
+                )
+                Row(
+                    modifier = modifier.padding(12.dp).fillMaxWidth()
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Share,
+                        contentDescription = "share icon",
+                        tint = Color.Red
+                    )
+                    Text(text = "Share Station")
+                }
+            }
+        }) {
+
+
+        CustomScaffold(
+            modifier = modifier.fillMaxSize(),
+            scaffoldState = scaffoldState,
+            topBar = {
+                TopAppBar(
+                    title = { Text(text = "") },
+                    backgroundColor = Color.White,
+                    actions = {
+                        IconButton(onClick = { /*TODO*/ }) {
+                            Icon(
+                                painter = painterResource(
+                                    id = R.drawable.baseline_more_vert_24,
+                                ),
+                                contentDescription = null,
+                                tint = Color.Red
+                            )
+                        }
+                    }
+                )
+            },
+            content = {
+                Column(
+                    modifier = modifier.fillMaxSize()
+                ) {
+                    RadioCardItem(
+                        title = "Apple Music 1",
+                        subTitle = "놓쳐서 안 될 신곡",
+                        albumImage = R.drawable.img_new_jeans,
+                        onClickCalendar = {
+                            coroutineScope.launch {
+                                if (modalSheetState.isVisible) modalSheetState.hide()
+                                else modalSheetState.animateTo(ModalBottomSheetValue.Expanded)
+                            }
+                        }
+                    )
+                    Spacer(modifier = modifier.height(30.dp))
+                    RadioCardItem(
+                        title = "Apple Music Hits",
+                        subTitle = "시대를 초월해 사랑받는 히트곡",
+                        albumImage = R.drawable.img_bts,
+                        onClickCalendar = {
+                            coroutineScope.launch {
+                                if (modalSheetState.isVisible) modalSheetState.hide()
+                                else modalSheetState.animateTo(ModalBottomSheetValue.Expanded)
+                            }
+                        }
+                    )
+                }
+            }
+        )
+    }
 }
 
 @Composable
@@ -69,7 +138,8 @@ fun RadioCardItem(
     modifier: Modifier = Modifier,
     title: String,
     subTitle: String,
-    albumImage: Int
+    albumImage: Int,
+    onClickCalendar: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -92,7 +162,7 @@ fun RadioCardItem(
                     fontSize = 15.sp
                 )
             }
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { onClickCalendar() }) {
                 Icon(painter = painterResource(
                     id = R.drawable.baseline_calendar_month_24),
                     contentDescription = "calendar icon",
@@ -165,7 +235,8 @@ fun RadioCardItemPreview() {
     RadioCardItem(
         title = "Apple Music 1",
         subTitle = "놓쳐서 안 될 신곡",
-        albumImage = R.drawable.img_new_jeans
+        albumImage = R.drawable.img_new_jeans,
+        onClickCalendar = {}
     )
 }
 
